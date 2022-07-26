@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.Models;
+using MusicLibrary.Models.ViewModels;
 
 namespace MusicLibrary.Controllers
 {
@@ -21,23 +22,28 @@ namespace MusicLibrary.Controllers
             return View(_db.Artists.ToList());
         }
 
-        // GET: ArtistController/Details/5
-        public ActionResult SongsByArtist(int id)
+        // GET: Songs by Artist
+        public ActionResult SongsByArtist(int? artistId)
         {
-            try
-            {
-                Artist artist =_db.Artists.
-                    Include(a => a.Songs).
-                    ThenInclude(r => r.Genre).
-                    First(a => a.Id == id);
+            ArtistSelectViewModel vm;
 
-                return View(artist);
-            }catch(Exception e)
+            if (artistId != null)
+            {
+                try
+                {
+                    Artist artist = _db.Artists.Include(r => r.Songs).ThenInclude(r => r.Collections).First(r => r.Id == artistId);
+                    return View(artist);
+                }catch
+                {
+                    return RedirectToAction("Error", "Home");
+                }
+                
+            }else
             {
                 return RedirectToAction("Error", "Home");
             }
-
-            return View();
+            
+            
         }
 
         // GET: ArtistController/Create

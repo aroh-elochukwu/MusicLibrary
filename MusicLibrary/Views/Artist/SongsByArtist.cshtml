@@ -1,10 +1,11 @@
 ﻿@model MusicLibrary.Models.Artist
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "ArtistDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h2>Songs by Artist</h2>
 
 <div>
     <h4>Artist</h4>
@@ -17,19 +18,14 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
     </dl>
-    <h3>Songs</h3>
-    <ul>
-        @foreach(Song s in Model.Songs)
-        {
-            <li>@s.Name (@s.Genre.Name)</li>
-        }
-    </ul>
-
-
-
-
 </div>
+<ul>
+    @foreach(Song s in Model.Songs)
+    {
+        <li>@s.Name- @s.Collections.Count() Listener(s)</li>
+    }
+</ul>
 <div>
-    
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

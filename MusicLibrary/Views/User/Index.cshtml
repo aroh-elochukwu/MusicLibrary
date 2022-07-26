@@ -1,0 +1,9 @@
+﻿@using MusicLibrary.Models.ViewModels
+@model UserSelectViewModel
+
+
+<h3>Select User</h3>
+<form asp-action="SongsByArtist" method="get">
+    <select name="userId" asp-items="Model.UserSelect"></select>
+    <button type="submit">Check Song Collection</button>
+</form>
